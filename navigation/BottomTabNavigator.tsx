@@ -10,9 +10,11 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import TabSearchScreen from '../screens/TabSearch/TabSearchScreen';
+import TabAppointmentScreen from '../screens/TabAppointment/TabAppointmentScreen';
+import TabMessageScreen from '../screens/TabMessage/TabMessageScreen';
+import TabProfileScreen from '../screens/TabProfile/TabProfileScreen';
+import { BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, TabProfileParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -21,20 +23,34 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="TabSearch"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="TabSearch"
+        component={TabSearchNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="TabAppointment"
+        component={TabAppointmentNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="calendar-outline" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="TabMessage"
+        component={TabMessageNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="chatbubble-ellipses-outline" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="TabProfile"
+        component={TabProfileNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="person-outline" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -49,30 +65,63 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+// Tab Search
+const TabSearchStack = createStackNavigator<TabSearchParamList>();
+
+function TabSearchNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <TabSearchStack.Navigator>
+      <TabSearchStack.Screen
+        name="TabSearchScreen"
+        component={TabSearchScreen}
+        options={{ headerTitle: 'Search' }}
       />
-    </TabOneStack.Navigator>
+    </TabSearchStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+// Tab Appointment
+const TabAppointmentStack = createStackNavigator<TabAppointmentParamList>();
 
-function TabTwoNavigator() {
+function TabAppointmentNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <TabAppointmentStack.Navigator>
+      <TabAppointmentStack.Screen
+        name="TabAppointmentScreen"
+        component={TabAppointmentScreen}
+        options={{ headerTitle: 'Appointment' }}
       />
-    </TabTwoStack.Navigator>
+    </TabAppointmentStack.Navigator>
+  );
+}
+
+// Tab Message
+const TabMessageStack = createStackNavigator<TabMessageParamList>();
+
+function TabMessageNavigator() {
+  return (
+    <TabMessageStack.Navigator>
+      <TabMessageStack.Screen
+        name="TabMessageScreen"
+        component={TabMessageScreen}
+        options={{ headerTitle: 'Message' }}
+      />
+    </TabMessageStack.Navigator>
+  );
+}
+
+//
+const TabProfileStack = createStackNavigator<TabProfileParamList>();
+
+function TabProfileNavigator() {
+  return (
+    <TabProfileStack.Navigator>
+      <TabProfileStack.Screen
+        name="TabProfileScreen"
+        component={TabProfileScreen}
+        options={{ headerTitle: 'Profile' }}
+      />
+    </TabProfileStack.Navigator>
   );
 }
