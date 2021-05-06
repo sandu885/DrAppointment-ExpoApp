@@ -48,7 +48,7 @@ const Item = ({ item }) => (
       source={item.img}
     />
     <View>
-      <Text style={styles.text}>{item.name}</Text>
+      <Text style={[styles.text, styles.textBold]}>{item.name}</Text>
       <Text style={styles.text}>{item.summary}</Text>
       <Text style={styles.text}>{item.locations}</Text>
       <Text style={styles.text}>{item.scheduled_hours}</Text>
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
   searchList: {
     width: '100%',
     flex: 1,
-    backgroundColor: 'red',
     padding: 5,
   },
   searchItem: {
@@ -128,5 +127,8 @@ const styles = StyleSheet.create({
   },
   text: {
     backgroundColor: '#e0f7ff',
+  },
+  textBold: {
+    fontWeight: 'bold',
   }
 });
