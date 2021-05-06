@@ -26,28 +26,28 @@ export default function BottomTabNavigator() {
       initialRouteName="TabSearch"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabSearch"
+        name="Search"
         component={TabSearchNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabAppointment"
+        name="Appointment"
         component={TabAppointmentNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="calendar-outline" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabMessage"
+        name="Message"
         component={TabMessageNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="chatbubble-ellipses-outline" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabProfile"
+        name="Profile"
         component={TabProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="person-outline" color={color} />,

@@ -50,7 +50,8 @@ const Item = ({ item }) => (
     <View>
       <Text style={styles.text}>{item.name}</Text>
       <Text style={styles.text}>{item.summary}</Text>
-      <Text style={styles.text}>{item.specialties}</Text>
+      <Text style={styles.text}>{item.locations}</Text>
+      <Text style={styles.text}>{item.scheduled_hours}</Text>
     </View>
   </View>
 );
@@ -64,13 +65,6 @@ export default function TabAppointmentScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchBar}>
-        <TextInput
-          style={styles.searchInput}
-          onChangeText={onChangeText}
-          value={text}
-        />
-      </View>
       <FlatList
         style={styles.searchList}
         data={DATA}

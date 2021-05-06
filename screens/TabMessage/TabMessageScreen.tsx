@@ -9,48 +9,91 @@ const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     name: 'Ajay Marwaga',
-    summary: 'Dental Doctor',
-    img: require('../../assets/img/profile1.png'),
-    specialties: 'A B C',
-    locations: 'California',
-    reviews: '5',
-    available_hours: '10:00 am - 04:00 pm',
-    scheduled_hours: '02:00 pm - 03:00 pm',
+    profileImage: require('../../assets/img/profile2.png'),
+    last_message: 'Hello',
+    has_unread_message: true,
+    unread_messages: 3,
+    last_seen: '2021-05-06 20:00'
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    id: 'bd7acbea-c1b1-46c2-aed5-3af53abb28bb',
     name: 'Roberto Blackwell',
-    summary: 'Dental Doctor',
-    img: require('../../assets/img/profile2.png'),
-    specialties: 'A B C',
-    locations: 'California',
-    reviews: '5',
-    available_hours: '10:00 am - 04:00 pm',
-    scheduled_hours: '02:00 pm - 03:00 pm',
+    profileImage: require('../../assets/img/profile3.png'),
+    last_message: 'Hello, how are you?',
+    has_unread_message: false,
+    unread_messages: 0,
+    last_seen: '2021-05-06 20:00'
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    name: 'Jean Louis',
-    summary: 'Dental Doctor',
-    img: require('../../assets/img/profile3.png'),
-    specialties: 'A B C',
-    locations: 'California',
-    reviews: '5',
-    available_hours: '10:00 am - 04:00 pm',
-    scheduled_hours: '02:00 pm - 03:00 pm',
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bc',
+    name: 'Ajay Marwaga',
+    profileImage: require('../../assets/img/profile2.png'),
+    last_message: 'Hello',
+    has_unread_message: true,
+    unread_messages: 3,
+    last_seen: '2021-05-06 20:00'
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3af53abb28bd',
+    name: 'Roberto Blackwell',
+    profileImage: require('../../assets/img/profile3.png'),
+    last_message: 'Hello, how are you?',
+    has_unread_message: false,
+    unread_messages: 0,
+    last_seen: '2021-05-06 20:00'
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28be',
+    name: 'Ajay Marwaga',
+    profileImage: require('../../assets/img/profile2.png'),
+    last_message: 'Hello',
+    has_unread_message: true,
+    unread_messages: 3,
+    last_seen: '2021-05-06 20:00'
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3af53abb28bf',
+    name: 'Roberto Blackwell',
+    profileImage: require('../../assets/img/profile3.png'),
+    last_message: 'Hello, how are you?',
+    has_unread_message: false,
+    unread_messages: 0,
+    last_seen: '2021-05-06 20:00'
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28bg',
+    name: 'Ajay Marwaga',
+    profileImage: require('../../assets/img/profile2.png'),
+    last_message: 'Hello',
+    has_unread_message: true,
+    unread_messages: 3,
+    last_seen: '2021-05-06 20:00'
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3af53abb28bh',
+    name: 'Roberto Blackwell',
+    profileImage: require('../../assets/img/profile3.png'),
+    last_message: 'Hello, how are you?',
+    has_unread_message: false,
+    unread_messages: 0,
+    last_seen: '2021-05-06 20:00'
   },
 ];
 
 const Item = ({ item }) => (
-  <View style={[styles.searchItem, styles.shadow]}>
+  <View style={styles.messageItem}>
     <Image
       style={styles.profileImage}
-      source={item.img}
+      source={item.profileImage}
     />
-    <View>
-      <Text style={styles.text}>{item.name}</Text>
-      <Text style={styles.text}>{item.summary}</Text>
-      <Text style={styles.text}>{item.specialties}</Text>
+    <View style={{flex: 4, flexDirection: 'row'}}>
+      <View style={{flex: 3, flexDirection: 'column'}}>
+        <Text style={[styles.text, styles.textBold]}>{item.name}</Text>
+        <Text style={styles.text}>{item.last_message}</Text>
+      </View>
+      <View style={{flex: 1, flexDirection: 'column'}}>
+        <Text style={styles.text}>{item.last_seen}</Text>
+      </View>
     </View>
   </View>
 );
@@ -64,15 +107,8 @@ export default function TabMessageScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchBar}>
-        <TextInput
-          style={styles.searchInput}
-          onChangeText={onChangeText}
-          value={text}
-        />
-      </View>
       <FlatList
-        style={styles.searchList}
+        style={styles.messageList}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
@@ -87,42 +123,17 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     justifyContent: 'center',
   },
-  searchBar: {
-    backgroundColor: '#3698d5',
-    height: 50,
-    width: '100%',
-    padding: 10,
-  },
-  searchInput: {
-    borderWidth: 1,
-    borderColor: '#32475c',
-    borderRadius: 20,
-    backgroundColor: '#ffffff',
-    paddingHorizontal: 10,
-  },
-  searchList: {
+  messageList: {
     width: '100%',
     flex: 1,
-    backgroundColor: 'red',
-    padding: 5,
   },
-  searchItem: {
-    backgroundColor: '#e0f7ff',
+  messageItem: {
+    backgroundColor: '#fff',
     flex: 1,
     padding: 15,
-    margin: 5,
-    borderRadius: 8,
     flexDirection: 'row',
-  },
-  shadow: {
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d3d3d3',
   },
   profileImage: {
     width: 50,
@@ -133,6 +144,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   text: {
-    backgroundColor: '#e0f7ff',
+    backgroundColor: '#fff',
+  },
+  textBold: {
+    fontWeight: 'bold',
   }
 });
