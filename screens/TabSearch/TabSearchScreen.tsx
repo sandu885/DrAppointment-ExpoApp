@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-import { FlatList, TextInput, Image } from 'react-native';
+import { FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
+import { RootStackParamList, BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, TabProfileParamList } from '../types';
 
 const DATA = [
   {
@@ -41,8 +42,10 @@ const DATA = [
   },
 ];
 
-const Item = ({ item }) => (
-  <View style={[styles.searchItem, styles.shadow]}>
+const Item = ({ item, navigation }) => (
+  <TouchableOpacity style={[styles.searchItem, styles.shadow]}
+    onPress={() => navigation.navigate('DoctorDetailScreen', {screen: 'DoctorDetailScreen'})}
+  >
     <Image
       style={styles.profileImage}
       source={item.img}
@@ -52,14 +55,16 @@ const Item = ({ item }) => (
       <Text style={styles.text}>{item.summary}</Text>
       <Text style={styles.text}>{item.specialties}</Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
-export default function TabSearchScreen() {
+export default function TabSearchScreen({
+  navigation,
+}: StackScreenProps<TabSearchParamList, 'NotFound'>) {
   const [text, onChangeText] = React.useState("Useless Text");
 
   const renderItem = ({ item }) => (
-    <Item item={item} />
+    <Item item={item} navigation={navigation} />
   )
 
   return (
@@ -113,6 +118,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 8,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   shadow: {
     shadowColor: '#000000',

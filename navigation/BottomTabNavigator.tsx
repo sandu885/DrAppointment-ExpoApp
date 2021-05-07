@@ -11,6 +11,7 @@ import * as React from 'react';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabSearchScreen from '../screens/TabSearch/TabSearchScreen';
+import DoctorDetailScreen from '../screens/TabSearch/DoctorDetailScreen';
 import TabAppointmentScreen from '../screens/TabAppointment/TabAppointmentScreen';
 import AppointmentDetailScreen from '../screens/TabAppointment/AppointmentDetailScreen';
 import TabMessageScreen from '../screens/TabMessage/TabMessageScreen';
@@ -77,6 +78,11 @@ function TabSearchNavigator() {
         name="TabSearchScreen"
         component={TabSearchScreen}
         options={{ headerTitle: 'Search' }}
+      />
+      <TabSearchStack.Screen
+        name="DoctorDetailScreen"
+        component={DoctorDetailScreen}
+        options={{ headerTitle: 'Doctor Detail' }}
       />
     </TabSearchStack.Navigator>
   );

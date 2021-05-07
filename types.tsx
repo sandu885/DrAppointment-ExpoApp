@@ -5,7 +5,6 @@
 
 export type RootStackParamList = {
   Root: undefined;
-  Appointment: {screen: any};
   NotFound: undefined;
 };
 
@@ -22,11 +21,13 @@ export type TabOneParamList = {
 
 export type TabSearchParamList = {
   TabSearchScreen: undefined;
+  DoctorDetailScreen: {screen: any};
+  NotFound: undefined;
 };
 
 export type TabAppointmentParamList = {
   TabAppointmentScreen: undefined;
-  AppointmentDetail: {screen: any};
+  AppointmentDetailScreen: {screen: any};
   NotFound: undefined;
 };
 
