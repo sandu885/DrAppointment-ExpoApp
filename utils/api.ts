@@ -84,6 +84,20 @@ export const loginDoctor = async ({email, password}: any) => {
     }
 };
 
+export const searchDoctor = async ({search}: any) => {
+    const data = {
+        search: search
+    };
+    try {
+        const res = await axios.post(`${apiUrl}/searchDoctor`, data, {
+            headers: headers
+        });
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+};
+
 /* * */ 
 
 export const updateProfile = async ({id, name, email}: any) => {
@@ -192,14 +206,13 @@ export const changeQuantity = async ({orderItemId, quantity}: any) => {
 
 export default {
     setSession: setSession,
+    
     registerUser: registerUser,
     loginUser: loginUser,
+
     registerDoctor: registerDoctor,
     loginDoctor: loginDoctor,
+    searchDoctor: searchDoctor,
+
     updateProfile: updateProfile,
-    loadMenu: loadMenu,
-    loadProducts: loadProducts,
-    addToCart: addToCart,
-    getCartData: getCartData,
-    changeQuantity: changeQuantity,
 };

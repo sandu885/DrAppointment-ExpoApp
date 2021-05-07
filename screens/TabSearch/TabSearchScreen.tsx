@@ -5,6 +5,12 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
 import { RootStackParamList, BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, TabProfileParamList } from '../types';
+import { Ionicons } from '@expo/vector-icons';
+import api from '../../utils/api';
+import { appKey } from '../../utils/env';
+import { SpinerOverlay } from '../../components/SpinerOverlay';
+
+const doctorAvatar = require('../../assets/img/profile1.png');
 
 const DATA = [
   {
@@ -48,11 +54,11 @@ const Item = ({ item, navigation }) => (
   >
     <Image
       style={styles.profileImage}
-      source={item.img}
+      source={doctorAvatar}
     />
     <View>
-      <Text style={[styles.text, styles.textBold]}>{item.name}</Text>
-      <Text style={styles.text}>{item.summary}</Text>
+      <Text style={[styles.text, styles.textBold]}>{item.fullname}</Text>
+      <Text style={styles.text}>{item.location}</Text>
       <Text style={styles.text}>{item.specialties}</Text>
     </View>
   </TouchableOpacity>
@@ -61,26 +67,60 @@ const Item = ({ item, navigation }) => (
 export default function TabSearchScreen({
   navigation,
 }: StackScreenProps<TabSearchParamList, 'NotFound'>) {
-  const [text, onChangeText] = React.useState("Useless Text");
+
+  const [loading, setLoading] = React.useState(false);
+  const [search, onChangeSearch] = React.useState("");
+  const [doctors, setDoctors] = React.useState([]);
 
   const renderItem = ({ item }) => (
     <Item item={item} navigation={navigation} />
   )
 
+  React.useEffect(() => {
+    handleSearch();
+  }, []);
+
+  const handleSearch = () => {
+    setLoading(true);
+    api.searchDoctor({search})
+      .then((res: any) => {
+        if(res.status === 200) {
+          try {
+            console.log('>>>', res);
+            setDoctors(res.data);
+          } catch (e) {
+            throw e;
+          }
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log('err: signup - ', err);
+        setLoading(false);
+      })
+  }
+
   return (
     <View style={styles.container}>
+      <SpinerOverlay visible={loading} />
       <View style={styles.searchBar}>
         <TextInput
+          placeholder="Search"
           style={styles.searchInput}
-          onChangeText={onChangeText}
-          value={text}
+          onChangeText={onChangeSearch}
+          value={search}
         />
+        <TouchableOpacity style={styles.searchButton}
+          onPress={() => handleSearch()}
+        >
+          <Ionicons name="search" size={24} color="white" />
+        </TouchableOpacity>
       </View>
       <FlatList
         style={styles.searchList}
-        data={DATA}
+        data={doctors}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
       />
     </View>
   );
@@ -96,15 +136,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#3698d5',
     height: 60,
     width: '100%',
-    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   searchInput: {
+    flex: 1,
     height: 40,
     borderWidth: 1,
     borderColor: '#c3c3c3',
     borderRadius: 20,
     backgroundColor: '#ffffff',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
+  },
+  searchButton: {
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   searchList: {
     width: '100%',
