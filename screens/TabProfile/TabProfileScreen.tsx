@@ -5,6 +5,7 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { RootStackParamList, AuthParamList } from '../types';
 
 const user = {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -18,12 +19,19 @@ const user = {
     scheduled_hours: '02:00 pm - 03:00 pm',
   }
 
-export default function TabProfileScreen() {
+export default function TabProfileScreen({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.profileImageSection}>
+          <TouchableOpacity style={styles.logoutButton}
+            onPress={() => navigation.replace('Auth', {screen: 'AuthScreen'})}
+          >
+            <Text style={styles.logoutButtonText}>Logout</Text>
+          </TouchableOpacity>
           <View style={styles.profileImageWrapper}>
             <Image style={styles.profileImage} source={user.img} />
             <TouchableOpacity style={styles.profileImageButton}>
@@ -126,5 +134,15 @@ const styles = StyleSheet.create({
     flex: 2,
     fontWeight: 'bold',
     textAlign: 'right',
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+  },
+  logoutButtonText: {
+    color: '#3698d5',
   }
 });

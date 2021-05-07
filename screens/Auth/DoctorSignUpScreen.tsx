@@ -1,25 +1,45 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import { ScrollView, TouchableOpacity, Image } from 'react-native';
+import { ScrollView, TouchableOpacity, Image, Text, View, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { RootStackParamList, AuthParamList } from '../types';
 
-export default function DoctorSignUpScreen() {
+export default function DoctorSignUpScreen({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.profileImageSection}>
-          <View style={styles.profileImageWrapper}>
-            {/* <Image style={styles.profileImage} source={user.img} /> */}
+        <View style={styles.logoImageSection}>
+          <View style={styles.logoImageWrapper}>
+            <Image style={styles.logoImage} source={require('../../assets/images/icon.png')} />
           </View>
         </View>
-        <View style={styles.profileInfoSection}>
-          <View style={styles.profileInfoItem}>
+        <View style={styles.formSection}>
+          <View style={styles.formGroup}>
             <Text style={styles.labelText}>Full Name</Text>
-            <Text style={styles.valueText}>Full Name</Text>
+            <TextInput style={styles.inputText} />
+          </View>
+          <View style={styles.formGroup}>
+            <Text style={styles.labelText}>Email</Text>
+            <TextInput style={styles.inputText} />
+          </View>
+          <View style={styles.formGroup}>
+            <Text style={styles.labelText}>Password</Text>
+            <TextInput style={styles.inputText} />
+          </View>
+          <View style={styles.formGroup}>
+            <Text style={styles.labelText}>Password Confirmation</Text>
+            <TextInput style={styles.inputText} />
+          </View>
+          <View style={styles.formGroup}>
+            <TouchableOpacity style={styles.signButton}
+              onPress={() => navigation.replace('Root', {screen: 'TabProfileScreen'})}
+            >
+              <Text style={styles.buttonColor}>Sign Up</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -36,34 +56,21 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  profileImageSection: {
+  logoImageSection: {
     flex: 1,
     height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  profileImageWrapper: {
+  logoImageWrapper: {
     width: 120,
     height: 120, 
   },
-  profileImage: {
+  logoImage: {
     width: 120,
     height: 120, 
     borderRadius: 60,
     marginRight: 15,
-    borderColor: '#3698d5',
-    borderWidth: 1,
-  },
-  profileImageButton: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 30,
-    height: 30,
-    borderRadius: 30,
-    backgroundColor: '#3698d5',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   shadow: {
     shadowColor: '#000000',
@@ -75,17 +82,19 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  profileInfoSection: {
+  formSection: {
     flex: 1,
     marginBottom: 50,
   },
-  profileInfoItem: {
-    flexDirection: 'row',
+  formGroup: {
+    flexDirection: 'column',
+    marginHorizontal: 20,
+    marginHorizontal: 50,
+    paddingVertical: 5,
+  },
+  inputText: {
     borderBottomColor: '#c3c3c3',
     borderBottomWidth: 1,
-    marginHorizontal: 20,
-    marginTop: 10,
-    paddingVertical: 15,
   },
   labelText: {
     flex: 1,
@@ -95,5 +104,16 @@ const styles = StyleSheet.create({
     flex: 2,
     fontWeight: 'bold',
     textAlign: 'right',
+  },
+  signButton: {
+    height: 40,
+    marginTop: 20,
+    backgroundColor: 'red',
+    borderRadius: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonColor: {
+    color: '#fff',
   }
 });
