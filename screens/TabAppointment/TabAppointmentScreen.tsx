@@ -3,7 +3,9 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-import { FlatList, TextInput, Image } from 'react-native';
+import { FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList, BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, TabProfileParamList } from '../types';
 
 const DATA = [
   {
@@ -41,8 +43,10 @@ const DATA = [
   },
 ];
 
-const Item = ({ item }) => (
-  <View style={[styles.searchItem, styles.shadow]}>
+const Item = ({ item, navigation }) => (
+  <TouchableOpacity style={[styles.searchItem, styles.shadow]}
+    onPress={() => navigation.navigate('AppointmentDetailScreen', {screen: 'AppointmentDetailScreen'})}
+  >
     <Image
       style={styles.profileImage}
       source={item.img}
@@ -53,14 +57,16 @@ const Item = ({ item }) => (
       <Text style={styles.text}>{item.locations}</Text>
       <Text style={styles.text}>{item.scheduled_hours}</Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
-export default function TabAppointmentScreen() {
+export default function TabAppointmentScreen({
+  navigation,
+}: StackScreenProps<TabAppointmentParamList, 'NotFound'>) {
   const [text, onChangeText] = React.useState("Useless Text");
 
   const renderItem = ({ item }) => (
-    <Item item={item} />
+    <Item item={item} navigation={navigation} />
   )
 
   return (

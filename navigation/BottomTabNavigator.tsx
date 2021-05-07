@@ -12,6 +12,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabSearchScreen from '../screens/TabSearch/TabSearchScreen';
 import TabAppointmentScreen from '../screens/TabAppointment/TabAppointmentScreen';
+import AppointmentDetailScreen from '../screens/TabAppointment/AppointmentDetailScreen';
 import TabMessageScreen from '../screens/TabMessage/TabMessageScreen';
 import TabProfileScreen from '../screens/TabProfile/TabProfileScreen';
 import { BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, TabProfileParamList } from '../types';
@@ -91,6 +92,11 @@ function TabAppointmentNavigator() {
         name="TabAppointmentScreen"
         component={TabAppointmentScreen}
         options={{ headerTitle: 'Appointment' }}
+      />
+      <TabAppointmentStack.Screen
+        name="AppointmentDetailScreen"
+        component={AppointmentDetailScreen}
+        options={{ headerTitle: 'Appointment Detail' }}
       />
     </TabAppointmentStack.Navigator>
   );
