@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import { ScrollView, TouchableOpacity, Image } from 'react-native';
+import { ScrollView, TouchableOpacity, Image, TextInput, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList, AuthParamList } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../../utils/api';
+import { appKey } from '../../utils/env';
+import { SpinerOverlay } from '../../components/SpinerOverlay';
 
 const user = {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -24,13 +25,75 @@ export default function TabProfileScreen({
   navigation,
 }: StackScreenProps<RootStackParamList, 'NotFound'>) {
 
+  const [loading, setLoading] = React.useState(false);
+  const [user, setUser] = React.useState({
+    fullname: '',
+    email: '',
+    phone: '',
+    location: '',
+    specialties: ''
+  });
+
+  const [updateUser, setUpdateUser] = React.useState({
+    fullname: '',
+    email: '',
+    phone: '',
+    location: '',
+    specialties: ''
+  });
+  
+  const [editMode, setEditMode] = React.useState(false);
+
+  React.useEffect(() => {
+    checkSessionUser();
+  }, []);
+
+  const checkSessionUser = async () => {
+    try {
+      const sessionUser = await AsyncStorage.getItem(appKey.sessionUser);
+      if(sessionUser) {
+        setUser(JSON.parse(sessionUser));
+        setUpdateUser(JSON.parse(sessionUser));
+      }
+    } catch(e) {
+      throw e;
+    }
+  }
+
   const logout = () => {
     AsyncStorage.clear();
     navigation.replace('Auth', {screen: 'AuthScreen'})
   }
 
+  const toggleEdit = () => {
+    setEditMode(!editMode);
+  }
+
+  const updateProfile = () => {
+    setLoading(true);
+    api.updateDoctorProfile({updateUser})
+      .then((res: any) => {
+        console.log('res: ', res);
+        if(res.status === 200) {
+          try {
+            api.setSession(res.data);
+          } catch (e) {
+            throw e;
+          }
+        }
+        checkSessionUser();
+        toggleEdit();
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log('err: ', err);
+        setLoading(false);
+      });
+  }
+
   return (
     <View style={styles.container}>
+      <SpinerOverlay visible={loading} />
       <ScrollView style={styles.scrollView}>
         <View style={styles.profileImageSection}>
           <TouchableOpacity style={styles.logoutButton}
@@ -44,27 +107,70 @@ export default function TabProfileScreen({
               <Ionicons name="ios-camera" size={22} color="white" />
             </TouchableOpacity>
           </View>
+          {editMode 
+          ? <View style={styles.saveButtonWrapper}>
+              <TouchableOpacity style={styles.saveButton}
+                onPress={() => updateProfile()}
+              >
+                <Text style={styles.logoutButtonText}>Save</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.cancelButton}
+                onPress={() => {setUpdateUser(user);toggleEdit();}}
+              >
+                <Text style={styles.logoutButtonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          : <TouchableOpacity style={styles.editButton}
+              onPress={() => toggleEdit()}
+            >
+              <Text style={styles.logoutButtonText}>Edit Profile</Text>
+            </TouchableOpacity>}
         </View>
         <View style={styles.profileInfoSection}>
-          <View style={styles.profileInfoItem}>
+          <View style={[styles.profileInfoItem, editMode && {paddingVertical: 5}]}>
             <Text style={styles.labelText}>Full Name</Text>
-            <Text style={styles.valueText}>Full Name</Text>
+            {editMode 
+            ? <TextInput style={styles.inputText} 
+                onChangeText={text => setUpdateUser({...updateUser, fullname: text})}
+                value={updateUser.fullname}
+              /> 
+            : <Text style={styles.valueText}>{user.fullname}</Text>}
           </View>
-          <View style={styles.profileInfoItem}>
+          <View style={[styles.profileInfoItem, editMode && {paddingVertical: 5}]}>
             <Text style={styles.labelText}>Email</Text>
-            <Text style={styles.valueText}>Email@email.com</Text>
+            {editMode 
+            ? <TextInput style={styles.inputText} 
+                onChangeText={text => setUpdateUser({...updateUser, email: text})}
+                value={updateUser.email}
+              /> 
+            : <Text style={styles.valueText}>{user.email}</Text>}
           </View>
-          <View style={styles.profileInfoItem}>
+          <View style={[styles.profileInfoItem, editMode && {paddingVertical: 5}]}>
             <Text style={styles.labelText}>Phone</Text>
-            <Text style={styles.valueText}>+123456789</Text>
+            {editMode 
+            ? <TextInput style={styles.inputText} 
+                onChangeText={text => setUpdateUser({...updateUser, phone: text})}
+                value={updateUser.phone}
+              /> 
+            : <Text style={styles.valueText}>{user.phone}</Text>}
           </View>
-          <View style={styles.profileInfoItem}>
+          <View style={[styles.profileInfoItem, editMode && {paddingVertical: 5}]}>
             <Text style={styles.labelText}>Location</Text>
-            <Text style={styles.valueText}>location</Text>
+            {editMode 
+            ? <TextInput style={styles.inputText} 
+                onChangeText={text => setUpdateUser({...updateUser, location: text})}
+                value={updateUser.location}
+              /> 
+            : <Text style={styles.valueText}>{user.location}</Text>}
           </View>
-          <View style={styles.profileInfoItem}>
+          <View style={[styles.profileInfoItem, editMode && {paddingVertical: 5}]}>
             <Text style={styles.labelText}>Specialties</Text>
-            <Text style={styles.valueText}>Specialties</Text>
+            {editMode 
+            ? <TextInput style={styles.inputText} 
+                onChangeText={text => setUpdateUser({...updateUser, specialties: text})}
+                value={updateUser.specialties}
+              /> 
+            : <Text style={styles.valueText}>{user.specialties}</Text>}
           </View>
         </View>
       </ScrollView>
@@ -136,6 +242,15 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#c3c3c3',
   },
+  inputText: {
+    flex: 2,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    borderWidth: 1,
+    borderColor: '#c3c3c3',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
   valueText: {
     flex: 2,
     fontWeight: 'bold',
@@ -150,5 +265,26 @@ const styles = StyleSheet.create({
   },
   logoutButtonText: {
     color: '#3698d5',
+  },
+  editButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+  },
+  saveButtonWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    flexDirection: 'row',
+  },
+  saveButton: {
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+  },
+  cancelButton: {
+    paddingHorizontal: 15,
+    paddingVertical: 5,
   }
 });

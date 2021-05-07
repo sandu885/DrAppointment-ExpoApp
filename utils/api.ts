@@ -98,16 +98,13 @@ export const searchDoctor = async ({search}: any) => {
     }
 };
 
-/* * */ 
-
-export const updateProfile = async ({id, name, email}: any) => {
+export const updateDoctorProfile = async ({updateUser}: any) => {
     const data = {
-        id: id,
-        name: name,
-        email: email, 
+      updateUser: JSON.stringify(updateUser),
     };
+    console.log('>>>>', data);
     try {
-        const res = await axios.post(`${apiUrl}/updateProfile`, data, {
+        const res = await axios.post(`${apiUrl}/updateDoctorProfile`, data, {
             headers: headers
         });
         return res.data;
@@ -115,6 +112,8 @@ export const updateProfile = async ({id, name, email}: any) => {
         throw err;
     }
 };
+
+/* * */ 
 
 export const loadMenu = async () => {
     try {
@@ -213,6 +212,6 @@ export default {
     registerDoctor: registerDoctor,
     loginDoctor: loginDoctor,
     searchDoctor: searchDoctor,
+    updateDoctorProfile: updateDoctorProfile,
 
-    updateProfile: updateProfile,
 };
