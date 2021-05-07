@@ -5,6 +5,7 @@
 
 export type RootStackParamList = {
   Root: undefined;
+  Auth: undefined;
   Chat: undefined;
   NotFound: undefined;
 };
@@ -16,8 +17,13 @@ export type BottomTabParamList = {
   TabProfile: undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type AuthParamList = {
+  AuthScreen: undefined;
+  UserLoginScreen: undefined;
+  UserSignUpScreen: undefined;
+  DoctorLoginScreen: undefined;
+  DoctorSignUpScreen: undefined;
+  NotFound: undefined;
 };
 
 export type TabSearchParamList = {
