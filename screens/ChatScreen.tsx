@@ -48,10 +48,10 @@ export default function ChatScreen() {
       <ScrollView style={styles.messageBox}>
         {Messages.map((item, index) => <MessageItem key={index} keyExtractor={index} item={item} />)}
       </ScrollView>
-      <View style={styles.inputBox}>
+      <View style={[styles.inputBox, styles.shadow]}>
         <TextInput style={styles.input} />
         <TouchableOpacity style={styles.sendButton}>
-          <Ionicons name="paper-plane" style={styles.buttonIcon} size={24} color="#3698d5" />
+          <Ionicons name="paper-plane" style={styles.buttonIcon} size={24} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   messageBox: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#fff',
   },
   inMessage: {
     flexDirection: 'row',
@@ -97,16 +97,30 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     height: 60,
-    backgroundColor: '#c3c3c3',
+    backgroundColor: '#3698d5',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    borderTopColor: '#c3c3c3',
+    borderTopWidth: 1,
+  },
+  shadow: {
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   input: {
     flex: 1,
     height: 40,
     backgroundColor: '#fff',
     borderRadius: 20,
+    borderColor: '#c3c3c3',
+    borderWidth: 1,
     marginLeft: 20,
     paddingHorizontal: 15,
   },

@@ -94,13 +94,14 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     backgroundColor: '#3698d5',
-    height: 50,
+    height: 60,
     width: '100%',
     padding: 10,
   },
   searchInput: {
+    height: 40,
     borderWidth: 1,
-    borderColor: '#32475c',
+    borderColor: '#c3c3c3',
     borderRadius: 20,
     backgroundColor: '#ffffff',
     paddingHorizontal: 10,
