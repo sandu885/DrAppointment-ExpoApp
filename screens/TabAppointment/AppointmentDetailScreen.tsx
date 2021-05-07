@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-import { ScrollView, TouchableOpacity, Image } from 'react-native';
+import { ScrollView, TouchableOpacity, Image, Linking, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const user = {
@@ -19,6 +19,16 @@ const user = {
   }
 
 export default function AppointmentDetailScreen() {
+
+  const openSkype = async () => {
+    const url = `skype:live:.cid.4138a976227638ac`;
+    const supported = await Linking.canOpenURL(url);
+    if(supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this app`);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -38,8 +48,11 @@ export default function AppointmentDetailScreen() {
         </View>
       </View>
       <View style={styles.buttonSection}>
-        <TouchableOpacity style={styles.callButton}>
-          <Text style={{color: '#fff', fontSize: 16}}>Start Call</Text>
+        <TouchableOpacity style={styles.callButton}
+          onPress={() => openSkype()}
+        >
+          <Ionicons name="logo-skype" size={24} color="white" />
+          <Text style={{color: '#fff', fontSize: 16, marginLeft: 10}}>Start Call On Skype</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -108,5 +121,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   }
 });
