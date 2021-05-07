@@ -18,6 +18,7 @@ export const setSession = async (data: any) => {
       }
 };
 
+/* User API */ 
 export const registerUser = async ({fullname, email, password, passwordConfirmation}: any) => {
     const data = {
         fullname: fullname,
@@ -49,6 +50,41 @@ export const loginUser = async ({email, password}: any) => {
         throw err;
     }
 };
+
+/* Doctor API */ 
+export const registerDoctor = async ({fullname, email, password, passwordConfirmation}: any) => {
+    const data = {
+        fullname: fullname,
+        email: email, 
+        password: password,
+        password_confirmation: passwordConfirmation
+    };
+    try {
+        const res = await axios.post(`${apiUrl}/registerDoctor`, data, {
+            headers: headers
+        });
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+};
+
+export const loginDoctor = async ({email, password}: any) => {
+    const data = {
+        email: email, 
+        password: password
+    };
+    try {
+        const res = await axios.post(`${apiUrl}/loginDoctor`, data, {
+            headers: headers
+        });
+        return res.data;
+    } catch (err) {
+        throw err;
+    }
+};
+
+/* * */ 
 
 export const updateProfile = async ({id, name, email}: any) => {
     const data = {
@@ -158,6 +194,8 @@ export default {
     setSession: setSession,
     registerUser: registerUser,
     loginUser: loginUser,
+    registerDoctor: registerDoctor,
+    loginDoctor: loginDoctor,
     updateProfile: updateProfile,
     loadMenu: loadMenu,
     loadProducts: loadProducts,
