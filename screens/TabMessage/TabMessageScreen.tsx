@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-import { FlatList, TextInput, Image } from 'react-native';
+import { FlatList, TextInput, Image, TouchableOpacity } from 'react-native';
+import { RootStackParamList, BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, TabProfileParamList } from '../types';
 
 const DATA = [
   {
@@ -80,8 +81,10 @@ const DATA = [
   },
 ];
 
-const Item = ({ item }) => (
-  <View style={styles.messageItem}>
+const Item = ({ item, navigation }) => (
+  <TouchableOpacity style={styles.messageItem}
+    onPress={() => navigation.navigate('Chat', {screen: 'ChatScreen'})}
+  >
     <Image
       style={styles.profileImage}
       source={item.profileImage}
@@ -95,14 +98,16 @@ const Item = ({ item }) => (
         <Text style={styles.text}>{item.last_seen}</Text>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
-export default function TabMessageScreen() {
+export default function TabMessageScreen({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
   const [text, onChangeText] = React.useState("Useless Text");
 
   const renderItem = ({ item }) => (
-    <Item item={item} />
+    <Item item={item} navigation={navigation} />
   )
 
   return (

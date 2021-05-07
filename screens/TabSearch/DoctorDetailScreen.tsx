@@ -5,6 +5,7 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import { ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { RootStackParamList, BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, TabProfileParamList } from '../types';
 
 const user = {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -18,7 +19,9 @@ const user = {
     scheduled_hours: '02:00 pm - 03:00 pm',
   }
 
-export default function DoctorDetailScreen() {
+export default function DoctorDetailScreen({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
 
   return (
     <View style={styles.container}>
@@ -60,7 +63,9 @@ export default function DoctorDetailScreen() {
               </View>
             </View>
             <View style={styles.buttonSection}>
-              <TouchableOpacity style={styles.messageButton}>
+              <TouchableOpacity style={styles.messageButton}
+                onPress={() => navigation.navigate('Chat', {screen: 'ChatScreen'})}
+              >
                 <Text style={{color: '#3698d5', fontSize: 16}}>Send Message</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.bookButton}>
