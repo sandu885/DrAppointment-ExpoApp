@@ -50,8 +50,8 @@ export default function UserSignUpScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#ffb6c1',
   },
   scrollView: {
     flex: 1,
@@ -93,12 +93,12 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   inputText: {
-    borderBottomColor: '#c3c3c3',
+    borderBottomColor: '#fff',
     borderBottomWidth: 1,
   },
   labelText: {
     flex: 1,
-    color: '#c3c3c3',
+    color: '#fff',
   },
   valueText: {
     flex: 2,

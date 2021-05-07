@@ -42,8 +42,8 @@ export default function UserLoginScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#e0f7ff',
   },
   scrollView: {
     flex: 1,
