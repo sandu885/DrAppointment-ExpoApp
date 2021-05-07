@@ -6,6 +6,7 @@ import { Text, View } from '../../components/Themed';
 import { ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList, AuthParamList } from '../types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const user = {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -23,12 +24,17 @@ export default function TabProfileScreen({
   navigation,
 }: StackScreenProps<RootStackParamList, 'NotFound'>) {
 
+  const logout = () => {
+    AsyncStorage.clear();
+    navigation.replace('Auth', {screen: 'AuthScreen'})
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.profileImageSection}>
           <TouchableOpacity style={styles.logoutButton}
-            onPress={() => navigation.replace('Auth', {screen: 'AuthScreen'})}
+            onPress={() => logout()}
           >
             <Text style={styles.logoutButtonText}>Logout</Text>
           </TouchableOpacity>

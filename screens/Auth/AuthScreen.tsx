@@ -6,10 +6,31 @@ import { Text, View } from '../../components/Themed';
 import { ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList, AuthParamList } from '../types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../../utils/api';
+import { appKey } from '../../utils/env';
 
 export default function AuthScreen({
   navigation,
 }: StackScreenProps<AuthParamList, 'NotFound'>) {
+  
+  React.useEffect( () => {
+    checkLoggedIn();
+  }, []);
+
+  const checkLoggedIn = async () => {
+    try {
+      const _isLoggedIn = await AsyncStorage.getItem(appKey.isLoggedIn);
+      if(_isLoggedIn !== null && _isLoggedIn === "true") {
+        console.log('async: ', _isLoggedIn);
+        navigation.replace('Root', {screen: 'TabSearchScreen'})
+      } else {
+        
+      }
+    } catch(e) {
+      throw e;
+    }
+  }
 
   return (
     <View style={styles.container}>
