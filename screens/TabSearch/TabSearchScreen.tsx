@@ -50,7 +50,7 @@ const DATA = [
 
 const Item = ({ item, navigation }) => (
   <TouchableOpacity style={[styles.searchItem, styles.shadow]}
-    onPress={() => navigation.navigate('DoctorDetailScreen', {screen: 'DoctorDetailScreen'})}
+    onPress={() => navigation.navigate('DoctorDetailScreen', {screen: 'DoctorDetailScreen', item: item})}
   >
     <Image
       style={styles.profileImage}

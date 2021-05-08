@@ -115,103 +115,16 @@ export const updateDoctorProfile = async ({updateUser}: any) => {
 
 /* * */ 
 
-export const loadMenu = async () => {
-    try {
-        const res = await axios.get(`${apiUrl}/loadMenu`, {
-            headers: headers
-        });
-        return res.data;
-    } catch (err) {
-        throw err;
-    }
-}
-
-export const loadProducts = async ({categoryId}: any) => {
-    const data = {
-        categoryId: categoryId
-    };
-    try {
-        const res = await axios.post(`${apiUrl}/loadProducts`, data, {
-            headers: headers
-        });
-        return res.data;
-    } catch (err) {
-        throw err;
-    }
-}
-
-export const addToCart = async ({productId}: any) => {
-    try {
-        const _sessionUser = await AsyncStorage.getItem(appKey.sessionUser);
-        if(_sessionUser !== null) {
-            const sessionUser = JSON.parse(_sessionUser);
-            const data = {
-                userId: sessionUser.id,
-                productId: productId
-            };
-            const res = await axios.post(`${apiUrl}/addToCart`, data, {
-                headers: headers
-            });
-            return res.data;
-        } else {
-          return [];
-        }
-    } catch (err) {
-        throw err;
-    }
-}
-
-export const getCartData = async () => {
-    try {
-        const _sessionUser = await AsyncStorage.getItem(appKey.sessionUser);
-        if(_sessionUser !== null) {
-            const sessionUser = JSON.parse(_sessionUser);
-            const data = {
-                userId: sessionUser.id
-            };
-            const res = await axios.post(`${apiUrl}/getCartData`, data, {
-                headers: headers
-            });
-            return res.data;
-        } else {
-          return [];
-        }
-    } catch (err) {
-        throw err;
-    }
-}
-
-export const changeQuantity = async ({orderItemId, quantity}: any) => {
-    try {
-        const _sessionUser = await AsyncStorage.getItem(appKey.sessionUser);
-        if(_sessionUser !== null) {
-            const sessionUser = JSON.parse(_sessionUser);
-            const data = {
-                userId: sessionUser.id,
-                orderItemId: orderItemId,
-                quantity: quantity
-            };
-            const res = await axios.post(`${apiUrl}/changeQuantity`, data, {
-                headers: headers
-            });
-            return res.data;
-        } else {
-          return [];
-        }
-    } catch (err) {
-        throw err;
-    }
-}
 
 export default {
     setSession: setSession,
-    
+    // User api
     registerUser: registerUser,
     loginUser: loginUser,
-
+    // Doctor api
     registerDoctor: registerDoctor,
     loginDoctor: loginDoctor,
     searchDoctor: searchDoctor,
     updateDoctorProfile: updateDoctorProfile,
-
+    // Others
 };

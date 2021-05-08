@@ -20,8 +20,15 @@ const user = {
   }
 
 export default function DoctorDetailScreen({
+  route,
   navigation,
 }: StackScreenProps<RootStackParamList, 'NotFound'>) {
+
+  const {item} = route.params;
+
+  React.useEffect(() => {
+    console.log('>>', item);
+  });
 
   return (
     <View style={styles.container}>
@@ -32,8 +39,8 @@ export default function DoctorDetailScreen({
         <View style={styles.bodySection}>
           <View style={styles.profileCard}>
             <View style={styles.profileInfo}>
-              <Text style={styles.titleText}>Dudung Sokamti</Text>
-              <Text style={[styles.subTitleText, {color: '#3698d5'}]}>Eye Specialist</Text>
+              <Text style={styles.titleText}>{item.fullname}</Text>
+              <Text style={[styles.subTitleText, {color: '#3698d5'}]}>{item.specialties}</Text>
               <Text style={styles.summaryText}>4.9</Text>
               <Text style={styles.summaryText}>
                 Maecenas fringilla commodolacus, a eleifend liberodictum at. Cras nisi dolor, porta et iaculis sit amet, facilisis sit amet tellus. Donec vitase venenatis orci, a molestie massa. Nunc ultrices posuere risus, id vol.
