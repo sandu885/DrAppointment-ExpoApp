@@ -71,7 +71,8 @@ export default function DoctorDetailScreen({
             </View>
             <View style={styles.buttonSection}>
               <TouchableOpacity style={styles.messageButton}
-                onPress={() => navigation.navigate('Chat', {screen: 'ChatScreen'})}
+                onPress={() => navigation.navigate('Chat', {screen: 'ChatScreen', receiver: 'item'})}
+                // onPress={() => console.log('====', item)}
               >
                 <Text style={{color: '#3698d5', fontSize: 16}}>Send Message</Text>
               </TouchableOpacity>

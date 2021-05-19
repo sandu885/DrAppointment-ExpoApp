@@ -1,5 +1,5 @@
-export const domain = "https://e066754e88e0.ngrok.io/";
-export const apiUrl = "https://e066754e88e0.ngrok.io/api/app";
+export const domain = "http://54.226.64.160/";
+export const apiUrl = "http://54.226.64.160/api/app";
 export const appKey = {
     isLoggedIn: "@dr.appointment.isLoggedIn",
     sessionUser: "@dr.appointment.sessionUser",

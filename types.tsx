@@ -40,12 +40,15 @@ export type TabAppointmentParamList = {
 
 export type TabMessageParamList = {
   TabMessageScreen: undefined;
+  NotFound: undefined;
 };
 
 export type TabProfileParamList = {
   TabProfileScreen: undefined;
+  NotFound: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type ChatParamList = {
+  ChatScreen: undefined;
+  NotFound: undefined;
 };

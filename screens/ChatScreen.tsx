@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, ScrollView, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { RootStackParamList, BottomTabParamList, TabSearchParamList, TabAppointmentParamList, TabMessageParamList, ChatParamList } from '../types';
+import SimpleChat from '../components/SimpleChat';
 
 const Messages = [
   {
@@ -28,32 +30,20 @@ const Messages = [
   },
 ];
 
-export default function ChatScreen() {
-  const MessageItem = ({item}) => (
-    item.userId == 1 
-    ? <View style={styles.outMessage}>
-        <Text style={styles.outMessageText}>{item.message}</Text>
-      </View>
-    : <View style={styles.inMessage}>
-        <Image
-          style={styles.profileImage}
-          source={item.img}
-        />
-        <Text style={styles.inMessageText}>{item.message}</Text>
-      </View>
-  );
+export default function ChatScreen({
+  route,
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
+  
+  // const {receiver} = route.params;
+
+  React.useEffect(() => {
+    console.log('>> receiver >>', navigation);
+  });
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.messageBox}>
-        {Messages.map((item, index) => <MessageItem key={index} keyExtractor={index} item={item} />)}
-      </ScrollView>
-      <View style={[styles.inputBox, styles.shadow]}>
-        <TextInput style={styles.input} />
-        <TouchableOpacity style={styles.sendButton}>
-          <Ionicons name="paper-plane" style={styles.buttonIcon} size={24} color="#fff" />
-        </TouchableOpacity>
-      </View>
+      <SimpleChat messages={Messages} />
     </View>
   );
 }
